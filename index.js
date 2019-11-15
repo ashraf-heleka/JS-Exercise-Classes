@@ -85,17 +85,16 @@ class Car {
     return this.tank += gallons;
   }
   drive(distance){
-    if (this.gallons/this.milesPerGallon >= distance) {
-      this.odometer +=distance;
-      this.tank -=  (distance/this.milesPerGallon);
-    }
-    else {return `I ran out of fuel at ${this.odometer-1} miles!`}
-      
+    let gallonsNeeded = (distance/this.milesPerGallon);
+    if (this.tank >= gallonsNeeded) {
+      this.odometer += distance;     this.tank -= gallonsNeeded;
+      } else {
+        let milesDriven = (this.tank * this.milesPerGallon);
+        this.odometer += milesDriven;
+        this.tank = 0;
+        return `I ran out of fuel at ${milesDriven} miles!`}
+      }      
       }
-  }
-
-
-
 
 /*
   TASK 3
@@ -165,9 +164,24 @@ class Instructor extends Lambdasian{
         + `PRAssignment` a method that receives a subject as an argument and returns `student.name has submitted a PR for {subject}`
         + `sprintChallenge` similar to PRAssignment but returns `student.name has begun sprint challenge on {subject}`
 */
-class Student {
-
+class Student extends Lambdasian{
+  constructor(arg){
+    super(arg);
+    this.previousBackground = arg.previousBackground;
+    this.className = arg.className;
+    this.favSubjects = arg.favSubjects;
+  };
+  listSubjects(){
+    return `Loving ${this.favSubjects}.toString() !`;
+  };
+  PRAssignment(subject){
+    return `${this.name} has submitted a PR for ${subject}`;
+  }
+  sprintChallenge(subject){
+    return `${this.name} has begun sprint challenge on ${subject}`;
+  }
 }
+
 
 /*
   TASK 6
@@ -182,9 +196,20 @@ class Student {
         + `standUp` a method that takes in a slack channel and returns `{name} announces to {channel}, @channel standy times!`
         + `debugsCode` a method that takes in a student object and a subject and returns `{name} debugs {student.name}'s code on {subject}`
 */
-class ProjectManager {
-
+class ProjectManager extends Instructor {
+  constructor(arg){
+    super(arg);
+    this.gradClassName = arg.gradClassName;
+    this.favInstructor = arg.favInstructor;
+  }
+  standUp(channel){
+    return `${this.name} announces to ${channel}, @channel standy times!`
+  }
+  debugsCode(student, subject){
+    return `${this.name} debugs ${student.name}'s code on ${subject}`
+  }
 }
+
 
 /*
   STRETCH PROBLEM (no tests!)
